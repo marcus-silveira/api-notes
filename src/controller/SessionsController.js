@@ -24,8 +24,6 @@ class SessionsController {
     const token = sign({}, secret, {
       subject: String(user.id),
     });
-    console.log(`entrei no token: ${token}`)
-
     return res.status(201).json({ user, token });
   }
 }

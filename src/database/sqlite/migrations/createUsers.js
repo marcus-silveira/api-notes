@@ -4,6 +4,7 @@ const createUsers = `
   name VARCHAR,
   email VARCHAR,
   password VARCHAR,
+  avatar VARCHAR NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )`;
