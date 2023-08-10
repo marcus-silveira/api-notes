@@ -64,5 +64,3 @@ To get started, refer to the respective endpoints for user management, user sess
 
 
 Feel free to reach out with any questions or feedback.
-
----

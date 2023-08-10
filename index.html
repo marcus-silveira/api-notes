@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Note Registration API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #35424a;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #000000;
+        }
+
+        h2 {
+            color: #35424a;
+        }
+
+        h3 {
+            color: #35424a;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .endpoint {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .method-get { color: #388e3c; }
+        .method-post { color: #1565c0; }
+        .method-put { color: #e64a19; }
+        .method-patch { color: #fbc02d; }
+        .method-delete { color: #d32f2f; }
+
+        .console {
+            background-color: #222;
+            color: #7fff7f;
+            padding: 10px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Note Registration API Documentation</h1>
+        <p>Your comprehensive solution for efficient note management</p>
+    </header>
+    
+    <div class="container">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#usage">Usage</a></li>
+        </ul>
+
+        <h2 id="introduction">Introduction</h2>
+        <p>The Note Registration API offers a robust foundation for your note registration project. Designed to meet the
+            needs of front-end development teams, it provides an array of well-organized routes and functionalities. From
+            user registration with token-based authentication to note registration accompanied by tags and links, this API
+            streamlines the process. The implementation includes thorough testing using the JEST framework, ensuring the
+            integrity of the codebase. Its architecture is built with dependency inversion, empowering the enforcement of
+            business rules and the flexibility to adapt the database as needed.</p>
+
+        <h2 id="features">Features</h2>
+        <h3>User Management:</h3>
+        <div class="endpoint">
+            <span class="method-post">POST</span> - <code>/users/</code> - Register a new user<br>
+            <span class="method-put">PUT</span> - <code>/users/</code> - Update user information<br>
+            <span class="method-patch">PATCH</span> - <code>/users/avatar</code> - Update user avatar
+            <p><strong>Example <span class="method-post">POST</span> request:</strong></p>
+            <pre class="console">
+{
+    "name": "User Test",
+    "email": "test@test.com",
+    "password": "1234"
+}
+            </pre>
+        </div>
+
+        <h3>User Sessions:</h3>
+        <div class="endpoint">
+            <span class="method-post">POST</span> - <code>/sessions/</code> - Create a user session
+            <p><strong>Example <span class="method-post">POST</span> request:</strong></p>
+            <pre class="console">
+{
+    "email": "test@test.com",
+    "password": "1234"
+}
+            </pre>
+        </div>
+
+        <h3>Notes:</h3>
+        <div class="endpoint">
+            <span class="method-get">GET</span> - <code>/notes/</code> - Retrieve a list of all notes<br>
+            <span class="method-get">GET</span> - <code>/notes/:id</code> - Retrieve a specific note<br>
+            <span class="method-post">POST</span> - <code>/notes/</code> - Create a new note<br>
+            <span class="method-delete">DELETE</span> - <code>/notes/:id</code> - Delete a note
+            <p><strong>Example <span class="method-post">POST</span> request:</strong></p>
+            <pre class="console">
+{
+    "title": "Introduction to Python",
+    "description": "This is a Python note",
+    "tags": ["Python", "django"],
+    "links": ["link1", "link2"]
+}
+            </pre>
+        </div>
+
+        <h3>Tags:</h3>
+        <div class="endpoint">
+            <span class="method-get">GET</span> - <code>/tags/</code> - Get a list of all available tags
+        </div>
+
+        <h2 id="usage">Usage</h2>
+        <p>To get started, refer to the respective endpoints for user management, user sessions, note creation, retrieval,
+            and deletion, as well as tag retrieval. Make sure to provide valid JSON payloads in your requests.</p>
+
+        <p>Feel free to reach out with any questions or feedback.</p>
+    </div>
+</body>
+
+</html>
