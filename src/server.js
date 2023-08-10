@@ -11,7 +11,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/files", express.static(UPLOADS_FOLDER))
+app.use("/files", express.static(UPLOADS_FOLDER));
 app.use(routes);
 
 app.use((error, req, res, next) => {

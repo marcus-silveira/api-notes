@@ -14,7 +14,7 @@ class UserRepository {
       "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
       [name, email, password]
     );
-    return {id: userId};
+    return { id: userId };
   }
 }
 

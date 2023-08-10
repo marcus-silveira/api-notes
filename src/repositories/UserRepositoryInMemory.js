@@ -17,4 +17,4 @@ class UserRepositoryInMemory {
   }
 }
 
-module.exports = UserRepositoryInMemory
+module.exports = UserRepositoryInMemory;

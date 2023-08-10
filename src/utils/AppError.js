@@ -8,5 +8,4 @@ class AppError {
   }
 }
 
-
-module.exports = AppError
+module.exports = AppError;
