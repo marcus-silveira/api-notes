@@ -40,7 +40,7 @@ Example **POST** request:
 ```
 
 ### Notes:
-- **GET** - `/notes/` - Retrieve a list of all notes
+- **GET** - `/notes?title&tags` - Retrieve a list of all notes
 - **GET** - `/notes/:id` - Retrieve a specific note
 - **POST** - `/notes/` - Create a new note
 - **DELETE** - `/notes/:id` - Delete a note
