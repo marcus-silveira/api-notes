@@ -18,6 +18,7 @@ class UserAvatarController {
     }
 
     const fileName = await diskStorage.saveFile(avatarFileName);
+    console.log(fileName)
 
     user.avatar = fileName;
     await knex("users").update(user).where({ id: user_id });
