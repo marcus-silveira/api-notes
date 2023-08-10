@@ -6,6 +6,13 @@ const tagsRoutes = require("./tags.routes");
 const sessionsRoutes = require("./sessions.routes");
 
 const routes = Router();
+routes.use(
+  "/",
+  routes.get("/", (req, res) => {
+    res.json({"Project": "https://github.com/marcus-silveira/api-notes"});
+  })
+);
+
 routes.use("/users", usersRouter);
 routes.use("/sessions", sessionsRoutes);
 routes.use("/notes", notesRoutes);
