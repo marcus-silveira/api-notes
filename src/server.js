@@ -1,4 +1,5 @@
 require("express-async-errors");
+require("dotenv")
 
 const migrationsRun = require("./database/sqlite/migrations");
 const AppError = require("./utils/AppError");
@@ -27,5 +28,5 @@ app.use((error, req, res, next) => {
     message: "Internal Server Error",
   });
 });
-const PORT = 8000;
+const PORT = process.env.SERVER_PORT || 8000
 app.listen(PORT, () => console.log(`Server is running on Port ${PORT}`));
