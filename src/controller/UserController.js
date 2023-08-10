@@ -1,36 +1,29 @@
 const AppError = require("../utils/AppError");
 const sqliteConnection = require("../database/sqlite");
+const UserRepository = require("../repositories/UserRepository");
 const { hash, compare } = require("bcryptjs");
+const UserCreateService = require("../services/UserCreateService");
 
 class UserController {
   async create(req, res) {
     const { name, email, password } = req.body;
 
-    const database = await sqliteConnection();
+    const userRepository = new UserRepository();
+    const userCreateService = new UserCreateService(userRepository);
 
-    const checkUsersExists = await database.get(
-      "SELECT * FROM users WHERE email = (?)",
-      [email]
-    );
-    if (checkUsersExists) {
-      throw new AppError("Este e-mail já esta em uso.");
-    }
-
-    const hashedPassword = await hash(password, 8);
-    await database.run(
-      "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-      [name, email, hashedPassword]
-    );
+    await userCreateService.execute({ name, email, password });
 
     return res.status(201).json();
   }
 
   async update(req, res) {
     const { name, email, password, old_password } = req.body;
-    const  user_id  = req.user.id;
+    const user_id = req.user.id;
     const database = await sqliteConnection();
 
-    const user = await database.get("SELECT * FROM users WHERE id = (?)", [user_id]);
+    const user = await database.get("SELECT * FROM users WHERE id = (?)", [
+      user_id,
+    ]);
 
     if (!user) {
       throw new AppError("Usuário não encontrado");
