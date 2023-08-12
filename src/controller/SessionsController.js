@@ -7,6 +7,10 @@ const AppError = require("../utils/AppError");
 class SessionsController {
   async create(req, res) {
     const { email, password } = req.body;
+
+    if (!email | !password) {
+      throw new AppError("Todos os campos são o obrigatórios");
+    }
     const { secret, expiresIn } = authConfig.jwt;
 
     const user = await knex("users").where({ email }).first();

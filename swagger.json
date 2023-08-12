@@ -1,0 +1,433 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Note Registration API REST Documentation",
+    "description": "A API de Registro de Notas oferece uma base sólida para o seu projeto de registro de notas. Projetada para atender às necessidades das equipes de desenvolvimento de front-end, ela fornece uma série de rotas e funcionalidades bem organizadas. Desde o registro de usuários com autenticação baseada em token até o registro de notas acompanhadas por tags e links, essa API simplifica o processo. A implementação inclui testes abrangentes usando o framework JEST, garantindo a integridade da base de código. Sua arquitetura é construída com inversão de dependência, capacitando a aplicação das regras de negócios e a flexibilidade para adaptar o banco de dados conforme necessário."
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Cadastro de Usuário",
+        "description": "Rota para criação de usuário",
+        "tags": ["Users"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "required": true,
+                    "type": "string",
+                    "example": "User Test"
+                  },
+                  "email": {
+                    "required": true,
+                    "type": "string",
+                    "example": "test@test.com"
+                  },
+                  "password": {
+                    "required": true,
+                    "type": "string",
+                    "example": "1234"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar Usuário",
+        "description": "Rota para atualização de usuário",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "User Test 2"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "test2@test.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "85213469"
+                  },
+                  "old_password": {
+                    "type": "string",
+                    "example": "1234"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Atualizar foto do Usuário",
+        "description": "Rota para atualização da foto de perfil do usuário",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "profilePhoto": {
+                    "required": true,
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/sessions": {
+      "post": {
+        "summary": "Cadastro de Sessão do Usuário",
+        "description": "Rota para criação uma sessão para o usuário",
+        "tags": ["Sessions"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "required": true,
+                    "type": "string",
+                    "example": "test@test.com"
+                  },
+                  "password": {
+                    "required": true,
+                    "type": "string",
+                    "example": "1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sessão Criada com Sucesso.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "user": {
+                    "id": 4,
+                    "name": "User Test",
+                    "email": "test@test.com",
+                    "password": "$2a$08$ngd12nDqPYh6MWN.YNssO.kyRfq5mGsPo3z2r/EJEzehWDJtr02.a",
+                    "avatar": null,
+                    "created_at": "2023-08-12 12:43:11",
+                    "update_at": "2023-08-12 12:43:11"
+                  },
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2OTE4NDgxODgsInN1YiI6IjQifQ.2Ciocr4gJYeyzlexx3aD-TvrMbCAo5Cb5OTEtNYeb6w"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/notes": {
+      "post": {
+        "summary": "Criar Notas",
+        "description": "Rota para criar novas notas.",
+        "tags": ["Notes"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "title": {
+                    "required": true,
+                    "type": "string",
+                    "example": "Nota de teste em PRODUÇÃO"
+                  },
+                  "description": {
+                    "required": true,
+                    "type": "string",
+                    "example": "Isso é uma nota de TESTE"
+                  },
+                  "tags": {
+                    "required": true,
+                    "type": "string",
+                    "example": ["TESTE", "PROD"]
+                  },
+                  "links": {
+                    "required": true,
+                    "type": "string",
+                    "example": ["link1", "link2"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Exibir Notas",
+        "description": "Rota para buscar notas com base em filtros.",
+        "tags": ["Notes"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "description": "Filtrar por título da nota.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filtrar por tags das notas.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de notas encontradas.",
+            "content": {
+              "application/json": {
+                "example": [
+                  [
+                    {
+                      "0": {
+                        "id": 2,
+                        "title": "Nota de teste em PRODUÇÃO",
+                        "description": "Isso é uma nota de TESTE",
+                        "user_id": 4,
+                        "created_at": "2023-08-12 13:09:58",
+                        "updated_at": "2023-08-12 13:09:58"
+                      },
+                      "1": {
+                        "id": 3,
+                        "title": "Nota de teste em PRODUÇÃO",
+                        "description": "Isso é uma nota de TESTE",
+                        "user_id": 4,
+                        "created_at": "2023-08-12 13:46:15",
+                        "updated_at": "2023-08-12 13:46:15"
+                      },
+                      "tags": [
+                        {
+                          "id": 3,
+                          "name": "TESTE",
+                          "user_id": 4,
+                          "note_id": 2
+                        },
+                        {
+                          "id": 4,
+                          "name": "PROD",
+                          "user_id": 4,
+                          "note_id": 2
+                        }
+                      ]
+                    },
+                    {
+                      "0": {
+                        "id": 2,
+                        "title": "Nota de teste em PRODUÇÃO",
+                        "description": "Isso é uma nota de TESTE",
+                        "user_id": 4,
+                        "created_at": "2023-08-12 13:09:58",
+                        "updated_at": "2023-08-12 13:09:58"
+                      },
+                      "1": {
+                        "id": 3,
+                        "title": "Nota de teste em PRODUÇÃO",
+                        "description": "Isso é uma nota de TESTE",
+                        "user_id": 4,
+                        "created_at": "2023-08-12 13:46:15",
+                        "updated_at": "2023-08-12 13:46:15"
+                      },
+                      "tags": [
+                        {
+                          "id": 5,
+                          "name": "TESTE",
+                          "user_id": 4,
+                          "note_id": 3
+                        },
+                        {
+                          "id": 6,
+                          "name": "PROD",
+                          "user_id": 4,
+                          "note_id": 3
+                        }
+                      ]
+                    }
+                  ]
+                ]
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar Notas",
+        "description": "Rota para deletar usuários com base em um ID.",
+        "tags": ["Notes"],
+        "security": [{ "bearerAuth": [] }],
+
+        "parameters": [
+          {
+            "name": "note_id",
+            "in": "path",
+            "description": "ID da nota a ser excluída.",
+            "required": true,
+            "schema": {}
+          }
+        ]
+      }
+    },
+    "/notes/{id}": {
+      "get": {
+        "summary": "Buscar nota por ID",
+        "description": "Rota para buscar uma nota pelo ID.",
+        "tags": ["Notes"],
+        "security": [{ "bearerAuth": [] }],
+
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "description": "ID da nota a ser buscada.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de notas encontradas.",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 3,
+                    "title": "Nota de teste em PRODUÇÃO",
+                    "description": "Isso é uma nota de TESTE",
+                    "user_id": 4,
+                    "created_at": "2023-08-12 13:46:15",
+                    "updated_at": "2023-08-12 13:46:15",
+                    "tags": [
+                      {
+                        "id": 6,
+                        "name": "PROD",
+                        "user_id": 4,
+                        "note_id": 3
+                      },
+                      {
+                        "id": 5,
+                        "name": "TESTE",
+                        "user_id": 4,
+                        "note_id": 3
+                      }
+                    ],
+                    "links": [
+                      {
+                        "id": 5,
+                        "url": "link1",
+                        "note_id": 3,
+                        "created_at": "2023-08-12 13:46:15"
+                      },
+                      {
+                        "id": 6,
+                        "url": "link2",
+                        "note_id": 3,
+                        "created_at": "2023-08-12 13:46:15"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tags": {
+      "get": {
+        "summary": "Exibe todas as TAGS",
+        "description": "Rota para exibição de todas as TAGS",
+        "tags": ["Tags"],
+        "security": [{ "bearerAuth": [] }],
+
+        "requestBody": {
+          "content": {}
+        },
+
+        "responses": {
+          "200": {
+            "description": "Sessão Criada com Sucesso.",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 3,
+                    "name": "TESTE",
+                    "user_id": 4,
+                    "note_id": 2
+                  },
+                  {
+                    "id": 4,
+                    "name": "PROD",
+                    "user_id": 4,
+                    "note_id": 2
+                  },
+                  {
+                    "id": 5,
+                    "name": "TESTE",
+                    "user_id": 4,
+                    "note_id": 3
+                  },
+                  {
+                    "id": 6,
+                    "name": "PROD",
+                    "user_id": 4,
+                    "note_id": 3
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

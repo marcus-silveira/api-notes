@@ -8,10 +8,14 @@ const routes = require("./routes");
 const { UPLOADS_FOLDER } = require("./configs/upload");
 migrationsRun();
 
+const swaggerDocs = require("../swagger.json")
+const swaggerUi = require("swagger-ui-express")
+
 const app = express();
 
 app.use(express.json());
 
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 app.use("/files", express.static(UPLOADS_FOLDER));
 app.use(routes);
 

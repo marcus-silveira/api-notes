@@ -8,6 +8,10 @@ class UserController {
   async create(req, res) {
     const { name, email, password } = req.body;
 
+    if (!name | !email | !password) {
+      throw new AppError("Todos os campos são o obrigatórios");
+    }
+
     const userRepository = new UserRepository();
     const userCreateService = new UserCreateService(userRepository);
 
